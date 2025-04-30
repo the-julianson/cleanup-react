@@ -1,10 +1,10 @@
-const UNSPLASH_ACCESS_KEY = "LFXiNcZlywbjhGz4LO8nbacNaqaTiY0V2yBT1Fl2YXk"; // Replace with your key or leave blank to use fallback
+const UNSPLASH_ACCESS_KEY = "YOUR_UNSPLASH_ACCESS_KEY"; // Replace with your key or leave blank to use fallback
 
 const delayFetch = (url, options = {}) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(fetch(url, options));
-    }, options.delay || 1000);
+    }, options.delay || 1500);
   });
 };
 

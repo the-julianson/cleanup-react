@@ -1,48 +1,116 @@
-import * as React from "react";
-import { fetchPhoto } from "./api";
-import Carousel from "./Carousel";
-import PhotoCard from "./PhotoCard";
+import React from "react";
+
+// Fake quote generator (mimics network delay)
+const quotes = [
+  { text: "Knowledge is power.", author: "Francis Bacon" },
+  { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+  { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
+  { text: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House" }
+];
+
+function fetchQuote(id) {
+  const delay = 1000 + Math.floor(Math.random() * 3000);
+  console.log(`⏳ Fetching quote #${id} with delay ${delay}ms`);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(quotes[id % quotes.length]);
+    }, delay); // simulate 2s network delay
+  });
+}
 
 export default function App() {
+  const [quote, setQuote] = React.useState(null);
   const [id, setId] = React.useState(0);
-  const [photo, setPhoto] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(null);
-
-  const handlePrevious = () => {
-    if (id > 0) setId(id - 1);
-  };
-  const handleNext = () => setId(id + 1);
+  const [loading, setLoading] = React.useState(false);
+  const [useCleanup, setUseCleanup] = React.useState(true);
 
   React.useEffect(() => {
-    let isStale = false;
+    let ignore = false;
+    console.log("Use cleanup is", useCleanup);
+    // console.log("Is stale is", isStale);
+    // console.log("Quote is", quote);
+    console.log("Id is", id);
 
-    const fetch = async () => {
+    const getQuote = async () => {
+      console.log(`⏳ Start fetching quote #${id}`);
       setLoading(true);
-      setError(null);
+      const result = await fetchQuote(id);
 
-      const { error, response } = await fetchPhoto(id);
-
-      if (isStale) return;
-      if (error) {
-        setError(error.message);
-      } else {
-        setPhoto(response);
+      if (useCleanup && ignore) {
+        console.log(`❌ Cleanup: Skipping stale quote #${id}`);
+        return;
       }
 
+      console.log(`✅ Fetched quote #${id} and setting it`);
+      setQuote(result);
       setLoading(false);
     };
 
-    fetch();
+    getQuote();
 
-    return () => {
-      isStale = true;
-    };
-  }, [id]);
+    if (useCleanup) {
+      return () => {
+        ignore = true;
+      };
+    }
+  }, [id, useCleanup]);
 
   return (
-    <Carousel onPrevious={handlePrevious} onNext={handleNext}>
-      <PhotoCard loading={loading} error={error} data={photo} />
-    </Carousel>
+    <div style={{ fontFamily: "sans-serif", padding: "2rem", textAlign: "center" }}>
+      <h1>🧠 Quote Fetcher</h1>
+      <p>
+        This demo shows how <strong>cleanup in useEffect</strong> helps prevent async race conditions.
+      </p>
+
+      <div style={{ border: "1px solid #ccc", padding: "1rem", marginTop: "2rem" }}>
+        {loading ? (
+          <>
+          <p style={{ fontSize: "1.2rem" }}>⏳ Loading quote...</p>
+          <p>Patience is a virtue</p>
+          </>
+        ) : quote ? (
+          <>
+            <p style={{ fontSize: "1.2rem" }}>"{quote.text}"</p>
+            <p style={{ color: "#555" }}>— {quote.author} -- #ID: {id}</p>
+          </>
+        ) : (
+          <>
+            <p style={{ fontSize: "1.2rem" }}>No quote yet</p>
+            <p>Noooooo</p>
+          </>
+        )}
+      </div>
+
+      <div style={{ marginTop: "1rem" }}>
+        <button
+          onClick={() => setId((prev) => prev === quotes.length - 1 ? 0 : prev + 1)}
+          // disabled={loading}
+          style={{
+            padding: "0.5rem 1rem",
+            margin: "0.5rem",
+            backgroundColor: "#4f46e5",
+            color: "white",
+            border: "none",
+            borderRadius: "4px"
+          }}
+        >
+          ➡ Next Quote
+        </button>
+
+        <button
+          onClick={() => setUseCleanup((prev) => !prev)}
+          style={{
+            padding: "0.5rem 1rem",
+            margin: "0.5rem",
+            backgroundColor: useCleanup ? "#16a34a" : "#dc2626",
+            color: "white",
+            border: "none",
+            borderRadius: "4px"
+          }}
+        >
+          Cleanup is {useCleanup ? "ON ✅" : "OFF ❌"}
+        </button>
+      </div>
+    </div>
   );
 }

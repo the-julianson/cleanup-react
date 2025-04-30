@@ -1,4 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your custom styles below */
+
 .App {
   font-family: sans-serif;
   text-align: center;
 }
+
+/* Add this to your styles */
+/* Container styles for 3D perspective */
+.card-container {
+  perspective: 1000px;
+}
+
+/* Card flip animations */
+.flip-enter {
+  transform: rotateY(180deg);
+  transition: transform 0.6s ease-in-out;
+  transform-style: preserve-3d;
+}
+
+.flip-exit {
+  transform: rotateY(0deg);
+  transition: transform 0.6s ease-in-out;
+  transform-style: preserve-3d;
+}
+
