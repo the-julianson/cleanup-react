@@ -1,68 +1,80 @@
-🧠 React useEffect Cleanup Demo — Quote Race Condition
-This is a React demo that visually shows the importance of using a cleanup function to avoid race conditions when working with async logic inside useEffect.
+# 🧠 React `useEffect` Cleanup Demo — Quote Race Condition
 
-🔍 What It Does
-A “Next Quote” button fetches a quote (with random network delay) and updates the UI.
+This is a React demo that visually shows the importance of using a cleanup function to avoid **race conditions** when working with async logic inside `useEffect`.
+
+---
+
+## 🔍 What It Does
+
+A “Next Quote” button fetches a quote (with **random network delay**) and updates the UI.
 
 If you click the button rapidly, you’ll trigger multiple fetches for different quote IDs.
 
 This helps you observe:
 
-How stale responses can override newer ones (when cleanup is off)
+- How stale responses can override newer ones (when cleanup is **off**)
+- How a simple flag + cleanup avoids this entirely (when cleanup is **on**)
 
-How a simple flag + cleanup avoids this entirely (when cleanup is on)
+---
 
-🚦 How to Use
-Start the app
+## 🚦 How to Use
 
-In the UI, click “➡ Next Quote” a few times
+1. Start the app
+2. In the UI, click “➡ Next Quote” a few times
+3. Keep your browser **console open**
 
-Keep your browser console open!
+---
 
-✅ With Cleanup ON
-Only the latest quote is shown after loading
+## ✅ With Cleanup ON
 
-Console shows:
+- Only the **latest** quote is shown after loading
+- Console shows:
 
-less
-Copy
-Edit
-✅ Fetched quote #4 and setting it
-❌ Cleanup: Skipping stale quote #3
+```bash
+✅ Fetched quote #4 and setting it 
+❌ Cleanup: Skipping stale quote #3 
 ❌ Cleanup: Skipping stale quote #2
-✨ UI stays consistent — no flickering, no stale data
+```
 
-❌ With Cleanup OFF
-Click the “Cleanup is ON/OFF” button to toggle cleanup OFF
+- ✨ UI stays consistent — no flickering, no stale data
 
-Rapidly click “➡ Next Quote” several times
+## ❌ With Cleanup OFF
 
-Watch the console and the UI
+- Click the “Cleanup is ON/OFF” button to toggle **cleanup OFF**
+- Rapidly click “➡ Next Quote” several times
+- Watch the console and the UI
 
 You’ll notice:
 
-Flickering in the UI (you briefly see old quotes)
+- Flickering in the UI (you briefly see old quotes)
+- Console shows **multiple** logs like:
 
-Console shows multiple “✅ Fetched quote #X and setting it” logs — for quotes that should've been ignored!
+```bash
+✅ Fetched quote #X and setting it
+```
+…for quotes that should've been ignored!
 
-🧪 Why This Matters
-Disabling a button on loading might help in small demos — but in real-world apps:
+## 🧪 Why This Matters
 
-Async effects can come from routing, sockets, props, or form changes
+Disabling a button on `loading` might help in small demos — but in real-world apps:
 
-You can’t always rely on buttons to protect your UI
+- Async effects can come from **routing**, **sockets**, **props**, or **form changes**
+- You can’t always rely on buttons to protect your UI
 
-The cleanup function is your safeguard against race conditions.
+**The cleanup function is your safeguard against race conditions.**
 
-📦 Included
-20 hardcoded quotes in /quotes.js
+---
 
-Async simulator with random delay
+## 📦 Included
 
-Toggleable cleanup logic
+- ✅ 20 hardcoded quotes in `/quotes.js`
+- 🕓 Async simulator with random delay
+- 🔁 Toggleable cleanup logic
+- 🧾 Console logging to visualize lifecycle
 
-Console logging to visualize lifecycle
+---
 
-📬 Questions or Feedback?
-Feel free to fork, modify, and share!
-If you're learning React, this is a great exercise to internalize useEffect behavior.
+## 📬 Questions or Feedback?
+
+Feel free to fork, modify, and share!  
+If you're learning React, this is a great exercise to internalize `useEffect` behavior.
