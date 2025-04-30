@@ -1,12 +1,5 @@
 import React from "react";
-
-// Fake quote generator (mimics network delay)
-const quotes = [
-  { text: "Knowledge is power.", author: "Francis Bacon" },
-  { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
-  { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
-  { text: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House" }
-];
+import { quotes } from "./quotes";
 
 function fetchQuote(id) {
   const delay = 1000 + Math.floor(Math.random() * 3000);
@@ -14,7 +7,7 @@ function fetchQuote(id) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(quotes[id % quotes.length]);
-    }, delay); // simulate 2s network delay
+    }, delay);
   });
 }
 
@@ -26,10 +19,6 @@ export default function App() {
 
   React.useEffect(() => {
     let ignore = false;
-    console.log("Use cleanup is", useCleanup);
-    // console.log("Is stale is", isStale);
-    // console.log("Quote is", quote);
-    console.log("Id is", id);
 
     const getQuote = async () => {
       console.log(`⏳ Start fetching quote #${id}`);
@@ -84,7 +73,6 @@ export default function App() {
       <div style={{ marginTop: "1rem" }}>
         <button
           onClick={() => setId((prev) => prev === quotes.length - 1 ? 0 : prev + 1)}
-          // disabled={loading}
           style={{
             padding: "0.5rem 1rem",
             margin: "0.5rem",

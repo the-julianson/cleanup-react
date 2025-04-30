@@ -1,0 +1,22 @@
+export const quotes = [
+    { text: "Knowledge is power.", author: "Francis Bacon" },
+    { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+    { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
+    { text: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House" },
+    { text: "Programs must be written for people to read, and only incidentally for machines to execute.", author: "Harold Abelson" },
+    { text: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.", author: "Martin Fowler" },
+    { text: "First, solve the problem. Then, write the code.", author: "John Johnson" },
+    { text: "Experience is the name everyone gives to their mistakes.", author: "Oscar Wilde" },
+    { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
+    { text: "If you can’t explain it simply, you don’t understand it well enough.", author: "Albert Einstein" },
+    { text: "Fix the cause, not the symptom.", author: "Steve Maguire" },
+    { text: "Optimism is an occupational hazard of programming: feedback is the treatment.", author: "Kent Beck" },
+    { text: "Before software can be reusable it first has to be usable.", author: "Ralph Johnson" },
+    { text: "Make it work, make it right, make it fast.", author: "Kent Beck" },
+    { text: "Deleted code is debugged code.", author: "Jeff Sickel" },
+    { text: "Don’t comment bad code—rewrite it.", author: "Brian Kernighan" },
+    { text: "One man’s crappy software is another man’s full-time job.", author: "Jessica Gaston" },
+    { text: "Software testing proves the presence of bugs, not their absence.", author: "Edsger W. Dijkstra" },
+    { text: "Walking on water and developing software from a specification are easy if both are frozen.", author: "Edward V. Berard" },
+    { text: "Good code is its own best documentation.", author: "Steve McConnell" }
+  ];
